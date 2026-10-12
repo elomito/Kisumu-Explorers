@@ -1,0 +1,6 @@
+{
+  "name": "Traveler - Adventure & Outdoor Escapes",
+  "description": "Discover Nature, Find Your Escape. Handpicked outdoor hiking adventures, guided trails, and unforgettable wilderness experiences.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
