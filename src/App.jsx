@@ -4,7 +4,7 @@ import { FeatureDetailModal } from "./components/FeatureDetailModal";
 import { TrailExplorerModal } from "./components/TrailExplorerModal";
 import { ContactDrawer } from "./components/ContactDrawer";
 // import { NextSectionSlot } from "./components/NextSectionSlot"; 
-import { Footer } from "./components/Footer";
+import Footer from "./components/Footer";
 import { Navbar } from "./components/Navbar";
 import AdventureShowcase from "./components/AdventureShowcase";
 import PlacesSection from "./components/PlacesSection";
