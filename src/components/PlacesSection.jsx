@@ -4,12 +4,12 @@ import { Input } from "./ui/input";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 
 const places = [
-  { id: 1, name: "Kajulu Hills", category: "Hicking", image: "" },
-  { id: 2, name: "Kajulu Hills", category: "Hicking", image: "" },
-  { id: 3, name: "Kajulu Hills", category: "Hicking", image: "" },
-  { id: 4, name: "Kajulu Hills", category: "Hicking", image: "" },
-  { id: 5, name: "Kajulu Hills", category: "Hicking", image: "" },
-  { id: 6, name: "Kajulu Hills", category: "Hicking", image: "" },
+  { id: 2, name: "Kajulu Hills", category: "Hicking", image: "public/images/place 2.png" },
+  { id: 3, name: "Kit Mikayi", category: "Swimming", image: "public/images/place 3.png" },
+  { id: 4, name: "Lake Victoria", category: "Boat Riding", image: "public/images/place 4.png" },
+  { id: 5, name: "Karuma Falls", category: "Zip Lining", image: "public/images/place 5.png" },
+  { id: 6, name: "Riat Hills", category: "Camping", image: "public/images/place 6.png" },
+  { id: 1, name: "Show Ground", category: "Team building", image: "public/images/place 1.png" },
 ];
 
 export default function PlacesSection() {

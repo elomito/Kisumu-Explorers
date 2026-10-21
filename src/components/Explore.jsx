@@ -35,79 +35,15 @@ export default function Explore() {
         </div>
 
         {/* Landscape composition */}
-        <div className="relative mt-12 aspect-[1.35/1] w-full lg:absolute lg:inset-x-0 lg:bottom-[11%] lg:mt-0 lg:aspect-auto lg:h-[440px]">
-          <div className="landscape-shape absolute inset-0 overflow-hidden bg-[#244c75]">
+        <div className="relative mt-12 aspect-[1.35/1] w-full lg:absolute lg:inset-x-0 lg:bottom-[11%] lg:mt-0 lg:aspect-auto lg:h-[600px]">
+          <div className="landscape-shape absolute inset-0 overflow-hidden">
             {/* Replace with your landscape image */}
             <img
-              src="/images/about-landscape.jpg"
+              src="/images/trails.png"
               alt="Panoramic view of the surrounding hills and countryside"
               className="h-full w-full object-cover object-center"
             />
 
-            {/* Subtle overlay to blend the route with the landscape */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10" />
-
-            {/* GPS route */}
-            <svg
-              className="absolute inset-0 h-full w-full"
-              viewBox="0 0 1000 440"
-              preserveAspectRatio="none"
-              fill="none"
-              aria-label="Route connecting locations across the landscape"
-              role="img"
-            >
-              <path
-                d="
-                  M205 305
-                  L195 286 204 278 250 278 290 280
-                  306 268 313 248 355 250 365 270
-                  382 265 388 238 365 219 360 193
-                  380 184 405 204 430 202
-                  445 190 450 150 466 139
-                  492 135 505 120 520 131
-                  530 156 545 169 542 185
-                  530 202 538 218 555 225
-                  570 220 584 198 580 181
-                  590 171 603 178 610 197
-                  620 207 625 190 635 183
-                  632 169 645 157 666 152
-                  685 158 696 175 712 179
-                  725 171 730 155 744 151
-                  754 160 748 173 738 179
-                  742 192 755 203 768 198
-                  778 184 791 195 804 189
-                  815 174
-                "
-                stroke="#00E5ED"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                vectorEffect="non-scaling-stroke"
-              />
-            </svg>
-
-            {/* Location pins */}
-            {locations.map((location, index) => (
-              <div
-                key={`${location.x}-${index}`}
-                className="absolute z-10"
-                style={{
-                  left: `${location.x}%`,
-                  top: `${location.y}%`,
-                  transform: "translate(-50%, -50%)",
-                }}
-              >
-                <span className="block h-[18px] w-[18px] rounded-full bg-white shadow-sm sm:h-5 sm:w-5" />
-
-                <span
-                  className={`absolute top-1/2 w-max -translate-y-1/2 whitespace-nowrap text-[9px] font-medium text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] sm:text-[10px] ${
-                    location.side === "left" ? "right-5" : "left-5"
-                  }`}
-                >
-                  {location.label}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
       </div>
