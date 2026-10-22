@@ -1,117 +1,156 @@
+
 import { useState } from "react";
-import { Menu, X, Compass, Mountain, ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Compass,
+  Menu,
+  Mountain,
+  X,
+} from "lucide-react";
 
 export function Navbar({ onOpenExplore, onOpenContact }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: "Home", href: "#home", active: true },
-    { label: "About", href: "#about" },
-    { label: "Discover", href: "#discover", onClick: onOpenExplore },
-    { label: "Contact Us", href: "#contact", onClick: onOpenContact },
+    { label: "Home", href: "#home" },
+    { label: "About us", href: "#about" },
+    { label: "Adventures", href: "#adventures" },
+    { label: "Discover", href: "#discover" },
   ];
 
+  const handleExplore = () => {
+    setMobileMenuOpen(false);
+    onOpenExplore?.();
+  };
+
+  const handleContact = () => {
+    setMobileMenuOpen(false);
+    onOpenContact?.();
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4 md:pt-6">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-4 sm:px-6 sm:pt-5">
       <nav
-        aria-label="Main Navigation"
-        className="max-w-6xl mx-auto h-16 md:h-18 px-5 md:px-7 rounded-full bg-white/20 backdrop-blur-xl border border-white/35 shadow-xl shadow-black/10 flex items-center justify-between transition-all duration-300"
+        aria-label="Main navigation"
+        className="relative mx-auto flex h-[68px] max-w-[1320px] items-center justify-between rounded-full border border-white/20 bg-[#10291f]/65 px-4 shadow-lg shadow-black/10 backdrop-blur-2xl sm:px-6"
       >
-        {/* Brand Zone: traveler.com */}
+        {/* Brand */}
         <a
           href="#home"
-          className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-full py-1 pr-3"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-label="Kisumu Explorers home"
+          className="group flex shrink-0 items-center gap-2.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5f36a]"
         >
-          {/* Cyan Circular Emblem from the design */}
-          <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#00e5db] flex items-center justify-center shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-200">
-            <Mountain className="w-5 h-5 text-slate-900 fill-slate-900/20 stroke-[2.2]" />
-          </div>
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c5f36a] text-[#173b25] transition-transform duration-300 group-hover:rotate-[-8deg]">
+            <Mountain size={22} strokeWidth={2.2} />
+          </span>
 
-          <div className="flex items-baseline font-bold text-lg md:text-xl tracking-tight text-white select-none">
-            <span>traveler</span>
-            <span className="text-[#ff6238] font-black text-xl leading-none">
-              .
+          <span className="flex flex-col leading-none">
+            <span className="text-[14px] font-extrabold tracking-[-0.045em] text-white sm:text-base">
+              KISUMU
             </span>
-            <span>com</span>
-          </div>
+            <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.24em] text-white/65 sm:text-[10px]">
+              Explorers
+            </span>
+          </span>
         </a>
 
-        {/* Navigation Links Zone */}
-        <div className="hidden md:flex items-center gap-8 lg:gap-10">
-          {navLinks.map((link) => (
+        {/* Desktop links */}
+        <div className="hidden items-center gap-7 lg:flex xl:gap-9">
+          {navLinks.map((link, index) => (
             <a
               key={link.label}
               href={link.href}
-              onClick={(e) => {
-                if (link.onClick) {
-                  e.preventDefault();
-                  link.onClick();
-                }
-              }}
-              className={`text-sm lg:text-base font-medium transition-all duration-200 cursor-pointer ${
-                link.active
-                  ? "text-white font-semibold drop-shadow-sm"
-                  : "text-white/85 hover:text-white hover:drop-shadow-sm"
+              className={`relative py-2 text-[13px] font-medium transition-colors duration-200 hover:text-[#c5f36a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5f36a] ${
+                index === 0 ? "text-white" : "text-white/75"
               }`}
             >
               {link.label}
+              {index === 0 && (
+                <span className="absolute -bottom-1 left-0 h-0.5 w-4 rounded-full bg-[#c5f36a]" />
+              )}
             </a>
           ))}
         </div>
 
-        {/* Right Action: Translucent White Circular Hamburger Button */}
-        <div className="flex items-center gap-3">
+        {/* Desktop action */}
+        <div className="hidden items-center gap-3 lg:flex">
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle navigation menu"
-            className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-white/90 hover:bg-white text-slate-900 shadow-md flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 cursor-pointer"
+            type="button"
+            onClick={handleContact}
+            className="rounded-full px-4 py-3 text-[13px] font-semibold text-white/85 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5f36a]"
           >
-            {mobileMenuOpen ? (
-              <X className="w-5 h-5 text-slate-900 stroke-[2.5]" />
-            ) : (
-              <Menu className="w-5 h-5 text-slate-900 stroke-[2.5]" />
-            )}
+            Get in touch
+          </button>
+
+          <button
+            type="button"
+            onClick={handleExplore}
+            className="group inline-flex items-center gap-2 rounded-full bg-[#c5f36a] px-5 py-3 text-[13px] font-bold text-[#183320] transition duration-300 hover:bg-[#d5ff8c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            Let's explore
+            <ArrowRight
+              size={15}
+              className="transition-transform group-hover:translate-x-1"
+            />
           </button>
         </div>
-      </nav>
 
-      {/* Mobile Menu Dropdown Card */}
-      {mobileMenuOpen && (
-        <div className="md:hidden mt-3 max-w-6xl mx-auto rounded-3xl bg-slate-950/85 backdrop-blur-2xl border border-white/20 p-5 shadow-2xl text-white animate-in fade-in slide-in-from-top-4 duration-200">
-          <div className="flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  if (link.onClick) {
-                    e.preventDefault();
-                    link.onClick();
-                  }
-                }}
-                className="flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white/10 transition-colors text-base font-medium text-white/90 hover:text-white"
+        {/* Mobile toggle */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5f36a] lg:hidden"
+        >
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div
+            id="mobile-navigation"
+            className="absolute left-0 right-0 top-[calc(100%+12px)] rounded-[28px] border border-white/15 bg-[#10291f]/95 p-4 text-white shadow-2xl shadow-black/30 backdrop-blur-2xl lg:hidden"
+          >
+            <div className="flex flex-col gap-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-medium text-white/85 transition hover:bg-white/10 hover:text-[#c5f36a]"
+                >
+                  {link.label}
+                  <ArrowRight size={16} />
+                </a>
+              ))}
+            </div>
+
+            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-white/10 pt-4">
+              <button
+                type="button"
+                onClick={handleContact}
+                className="rounded-full border border-white/20 px-3 py-3 text-sm font-semibold transition hover:bg-white/10"
               >
-                <span>{link.label}</span>
-                <ArrowRight className="w-4 h-4 text-cyan-400 opacity-80" />
-              </a>
-            ))}
-          </div>
+                Contact us
+              </button>
 
-          <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-2">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenExplore?.();
-              }}
-              className="w-full py-3 px-5 rounded-full bg-[#034d44] hover:bg-[#046156] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg transition-colors cursor-pointer"
-            >
-              <Compass className="w-4 h-4" />
-              <span>Explore Nature Trails</span>
-            </button>
+              <button
+                type="button"
+                onClick={handleExplore}
+                className="flex items-center justify-center gap-2 rounded-full bg-[#c5f36a] px-3 py-3 text-sm font-bold text-[#183320] transition hover:bg-[#d5ff8c]"
+              >
+                <Compass size={16} />
+                Explore
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </nav>
     </header>
   );
 }
+
+export default Navbar;
