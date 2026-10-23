@@ -39,10 +39,10 @@ export function FeatureBar({ onFeatureClick }) {
   return (
     <aside
       aria-label="Traveler Guarantees"
-      className="w-full max-w-5xl mx-auto rounded-2xl md:rounded-3xl bg-white/15 backdrop-blur-xl border border-white/25 px-5 py-4 md:px-8 md:py-5 shadow-2xl shadow-black/25 text-white select-none transition-all duration-300 hover:bg-white/20"
+      className="w-full max-w-[16rem] rounded-2xl md:rounded-3xl bg-white/15 backdrop-blur-xl border border-white/25 px-4 py-3 md:px-5 md:py-4 shadow-2xl shadow-black/25 text-white select-none transition-all duration-300 hover:bg-white/20"
     >
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 divide-y md:divide-y-0 md:divide-x divide-white/15">
-        {features.map((feature, idx) => {
+      <div className="flex flex-col divide-y divide-white/15">
+        {features.map((feature) => {
           const IconComponent = feature.icon;
           return (
             <button
@@ -53,9 +53,7 @@ export function FeatureBar({ onFeatureClick }) {
                   feature.description,
                 )
               }
-              className={`flex items-center gap-3.5 text-left group p-1.5 md:px-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-xl transition-all duration-200 ${
-                idx !== 0 ? "pt-3 md:pt-1.5" : ""
-              }`}
+              className="flex items-center gap-3.5 text-left group w-full py-3.5 first:pt-1.5 last:pb-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-xl transition-all duration-200"
             >
               {/* Outer Pin / Icon Capsule */}
               <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center shrink-0 group-hover:bg-cyan-400 group-hover:text-slate-950 group-hover:border-cyan-300 transition-all duration-200 shadow-sm">
