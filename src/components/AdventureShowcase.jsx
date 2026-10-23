@@ -4,12 +4,12 @@ export default function AdventureShowcase() {
   return (
     <section
       id="about"
-      className="relative w-full overflow-hidden bg-white font-sans text-[#252525]"
+      className="relative w-full overflow-x-clip bg-white font-sans text-[#252525]"
     >
       {/* Top section */}
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 py-16 sm:px-10 lg:min-h-[420px] lg:grid-cols-2 lg:gap-12 lg:px-20 lg:py-14">
         {/* Text content */}
-        <div className="relative z-10 max-w-[450px]">
+        <div className="relative z-10 max-w-[450px] -mt-[50%]">
           <h2 className="mb-5 text-[30px] font-extrabold leading-[1.04] tracking-[-0.045em] sm:text-[34px]">
             Go places with us, have
             <br className="hidden sm:block" /> the best adventure
@@ -74,20 +74,15 @@ export default function AdventureShowcase() {
 
         {/* Group photo */}
         <div className="relative min-h-[330px] sm:min-h-[400px] lg:min-h-[460px]">
-          {/* Decorative blue shapes */}
-
-          {/* Group photo */}
-          <div>
-            <img
-              src="/images/group.png"
-              alt="Our group together"
-              className="h-full w-full object-cover"
-            />
-          </div>
+          <img
+            src="/images/group.png"
+            alt="Our group together"
+            className="absolute bottom-0 left-0 w-full max-w-none object-contain object-bottom lg:-bottom-10 lg:-left-10 lg:w-[75%]"
+          />
         </div>
 
         {/* Bottom text */}
-        <div className="relative z-20 max-w-[540px] py-10 pb-16 lg:py-10 lg:pb-20">
+        <div className="relative z-20 max-w-[540px] py-10 pb-16 lg:py-10 lg:pb-20 left-[-10%]">
           <h2 className="mb-5 text-[28px] font-extrabold leading-[1.04] tracking-[-0.04em] text-[#004f49] sm:text-[32px]">
             Go places with us, have the
             <br className="hidden sm:block" /> best adventure
