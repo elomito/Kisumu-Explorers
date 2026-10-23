@@ -59,7 +59,7 @@ export function Hero({ onExploreClick, onFeatureClick }) {
       <div className="relative z-20 w-full mt-auto pt-6">
         <FeatureBar onFeatureClick={onFeatureClick} />
       </div>
-        <div className="pointer-events-none relative z-10  -mb-[10vw] w-full leading-[0]">
+        <div className="pointer-events-none relative z-10  -mb-[12vw] w-full leading-[0]">
       <img
         src="/images/torn.png"
         alt=""

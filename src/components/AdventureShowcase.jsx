@@ -32,7 +32,7 @@ export default function AdventureShowcase() {
         {/* Overlapping photo collage */}
         <div className="relative mx-auto aspect-[1.35/1] w-full max-w-[500px] lg:justify-self-end">
           {/* Left photo */}
-          <div className="absolute bottom-[1%] left-0 z-10 h-[61%] w-[37%] overflow-hidden rounded-xl border-[3px] border-white bg-[#dce9e6]">
+          <div className="absolute bottom-[-40%] left-[-20%] z-10 h-[91%] w-[67%] overflow-hidden rounded-xl border-[3px] border-white bg-[#dce9e6]">
             <img
               src="/images/boat.png"
               alt="Boat on the lake"
@@ -41,7 +41,7 @@ export default function AdventureShowcase() {
           </div>
 
           {/* Right photo */}
-          <div className="absolute right-0 top-[13%] z-20 h-[55%] w-[31%] overflow-hidden rounded-xl border-[3px] border-white bg-[#dce9e6]">
+          <div className="absolute right-[-40%] top-[13%] z-20 h-[85%] w-[61%] overflow-hidden rounded-xl border-[3px] border-white bg-[#dce9e6]">
             <img
               src="/images/portrait.png"
               alt="Portrait"
@@ -50,7 +50,7 @@ export default function AdventureShowcase() {
           </div>
 
           {/* Main center photo */}
-          <div className="absolute left-[24%] top-0 z-30 h-[79%] w-[48%] overflow-hidden rounded-xl border-[3px] border-white bg-[#dce9e6] shadow-sm">
+          <div className="absolute left-[18%] top-0 z-30 h-[109%] w-[68%] overflow-hidden rounded-xl border-[3px] border-white bg-[#dce9e6] shadow-sm">
             <img
               src="/images/friends.png"
               alt="Friends enjoying a day together"

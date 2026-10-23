@@ -1,12 +1,3 @@
-const locations = [
-  { x: 20, y: 69, label: "zone01kisumu", side: "left" },
-  { x: 32, y: 58, label: "zone01kisumu", side: "left" },
-  { x: 41, y: 44, label: "zone01kisumu", side: "left" },
-  { x: 47, y: 46, label: "zone01kisumu", side: "right" },
-  { x: 55, y: 32, label: "zone01kisumu", side: "right" },
-  { x: 62, y: 49, label: "zone01kisumu", side: "right" },
-  { x: 85, y: 36, label: "zone01kisumu", side: "right" },
-];
 
 export default function Explore() {
   return (
