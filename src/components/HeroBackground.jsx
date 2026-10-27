@@ -18,6 +18,7 @@ export function HeroBackground({ imageSrc = DEFAULT_HERO_IMAGE }) {
   );
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [hasRotated, setHasRotated] = useState(false);
   const [status, setStatus] = useState({}); // { [src]: "loaded" | "failed" }
 
   const markStatus = (src, value) =>
@@ -25,10 +26,11 @@ export function HeroBackground({ imageSrc = DEFAULT_HERO_IMAGE }) {
       current[src] === value ? current : { ...current, [src]: value }
     );
 
-  // Preload every image
+  // Preload every image so the rotation can skip broken ones
   useEffect(() => {
     setStatus({});
     setActiveIndex(0);
+    setHasRotated(false);
 
     let cancelled = false;
     images.forEach((src) => {
@@ -52,7 +54,10 @@ export function HeroBackground({ imageSrc = DEFAULT_HERO_IMAGE }) {
       setActiveIndex((current) => {
         for (let step = 1; step <= images.length; step++) {
           const next = (current + step) % images.length;
-          if (status[images[next]] === "loaded") return next;
+          if (status[images[next]] === "loaded") {
+            setHasRotated(true);
+            return next;
+          }
         }
         return current;
       });
@@ -63,7 +68,7 @@ export function HeroBackground({ imageSrc = DEFAULT_HERO_IMAGE }) {
 
   return (
     <div
-      className="absolute inset-0 z-0 h-full w-full overflow-hidden bg-[#10291f]"
+      className="absolute inset-0 z-0 h-full w-full overflow-hidden bg-slate-900"
       aria-hidden="true"
     >
       {images.map((src, index) => (
@@ -71,8 +76,12 @@ export function HeroBackground({ imageSrc = DEFAULT_HERO_IMAGE }) {
           key={src}
           src={src}
           alt=""
-          className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-[1500ms] ease-in-out ${
-            activeIndex === index && status[src] === "loaded"
+          loading="eager"
+          fetchPriority={index === 0 ? "high" : "auto"}
+          className={`absolute inset-0 h-full w-full object-cover object-center ${
+            hasRotated ? "transition-opacity duration-[1500ms] ease-in-out" : ""
+          } ${
+            activeIndex === index && status[src] !== "failed"
               ? "opacity-100"
               : "opacity-0"
           }`}
