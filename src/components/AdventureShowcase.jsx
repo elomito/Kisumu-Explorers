@@ -10,15 +10,13 @@ export default function AdventureShowcase() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 py-16 sm:px-10 lg:min-h-[420px] lg:grid-cols-2 lg:gap-12 lg:px-20 lg:py-14">
         {/* Text content */}
         <div className="relative z-10 max-w-[450px] -mt-[50%]">
-          <h2 className="mb-5 text-[30px] font-extrabold leading-[1.04] tracking-[-0.045em] sm:text-[34px]">
-            Go places with us, have
-            <br className="hidden sm:block" /> the best adventure
+          <h2 className="mb-5 text-[40px] font-extrabold leading-[1.04] tracking-[-0.045em] sm:text-[40px]">
+            The world is much bigger outside
+          
           </h2>
 
-          <p className="max-w-[410px] text-sm leading-[1.48] text-[#696e6c]">
-            Discover new places, meet amazing people, and make memories that
-            last a lifetime. From hidden gems to unforgettable adventures, we
-            make every journey worth taking.
+          <p className="max-w-[410px] text-sm leading-[1.48] text-[#696e6c] sm:text-[18px]">
+            From quiet trails and lakeside sunsets to fun and exciting road trips, there's more to discover just beyond the everyday. We bring curious explorers together to experience the outdoors, one adventure at a time.
           </p>
 
           <Button
@@ -83,17 +81,13 @@ export default function AdventureShowcase() {
 
         {/* Bottom text */}
         <div className="relative z-20 max-w-[540px] py-10 pb-16 lg:py-10 lg:pb-20 left-[-10%]">
-          <h2 className="mb-5 text-[28px] font-extrabold leading-[1.04] tracking-[-0.04em] text-[#004f49] sm:text-[32px]">
+          <h2 className="mb-5 text-[28px] font-extrabold leading-[1.04] tracking-[-0.04em] text-[#004f49] sm:text-[45px]">
             Go places with us, have the
             <br className="hidden sm:block" /> best adventure
           </h2>
 
-          <p className="text-sm leading-[1.55] text-[#526d68]">
-            Every adventure tells a story. We bring people together through
-            shared experiences, beautiful destinations, and the joy of
-            discovering something new. Whether it is a weekend escape or a
-            journey into the unknown, there is always something waiting to be
-            explored.
+          <p className="text-sm leading-[1.55] text-[#526d68] sm:text-[18px]">
+           There's something special about discovering a new place, taking the scenic route, and sharing the moment with people who love the outdoors as much as you do. Whether it's your first trail or your next weekend escape, Kisumu Explorers is about making room for new experiences, new friendships, and stories worth telling.
           </p>
         </div>
       </div>

@@ -28,7 +28,7 @@ export function Navbar({ onOpenExplore, onOpenContact }) {
           </div>
 
           <div className="flex items-baseline font-bold text-lg md:text-xl tracking-tight text-white select-none">
-            <span>traveler</span>
+            <span>kisumuexplorers</span>
             <span className="text-[#ff6238] font-black text-xl leading-none">
               .
             </span>
