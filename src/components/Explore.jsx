@@ -8,7 +8,7 @@ export default function Explore() {
       <div className="relative mx-auto max-w-[1200px] lg:min-h-[740px]">
         {/* Heading and introduction */}
         <div className="relative z-10 lg:absolute lg:left-[7.5%] lg:top-[30px]">
-          <h2 className="max-w-[510px] text-[clamp(3.2rem,5.2vw,4.4rem)] font-extrabold leading-[0.96] tracking-[-0.055em]">
+          <h2 className="max-w-[400px] text-[clamp(3.2rem,5.2vw,4.4rem)] font-extrabold leading-[0.96] tracking-[-0.055em]">
             Go places
             <br />
             with us, have
@@ -16,12 +16,8 @@ export default function Explore() {
             the best
           </h2>
 
-          <p className="mt-8 max-w-[390px] text-[12px] leading-[1.35] text-[#686868]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in
+          <p className="mt-8 max-w-[390px] text-[15px] leading-[1.35] text-[#686868]">
+            Fresh air, new places, good people. You don't need to be an expert adventurer or have everything figured out. Just bring your curiosity. We'll take it from there.
           </p>
         </div>
 
