@@ -167,7 +167,7 @@ export function ContactDrawer({ isOpen, onClose, prefillSubject }) {
             </div>
             <div className="flex items-center gap-2">
               <Mail className="w-3.5 h-3.5 text-cyan-400" />
-              <span>team@traveler.com</span>
+              <span>info@kisumuexplorers.com</span>
             </div>
           </div>
         </div>
