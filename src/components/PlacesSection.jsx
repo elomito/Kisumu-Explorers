@@ -6,8 +6,8 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 const DEFAULT_DESCRIPTION = "A wonderful place to be, I got lost here";
 
 const places = [
-  { id: 1, name: "Kajulu Hills", category: "Hiking", image: "public/images/place 2.png" },
-  { id: 2, name: "Kit Mikayi", category: "Swimming", image: "public/images/place 3.png" },
+  { id: 1, name: "Kajulu Hills", category: "Hiking", image: "public/images/place-optimized.webp" },
+  { id: 2, name: "Kit Mikayi", category: "Swimming", image: "public/images/place 4.png" },
   { id: 3, name: "Lake Victoria", category: "Boat Riding", image: "public/images/place 4.png" },
   { id: 4, name: "Karuma Falls", category: "Zip Lining", image: "public/images/place 5.png" },
   { id: 5, name: "Riat Hills", category: "Camping", image: "public/images/place 6.png" },

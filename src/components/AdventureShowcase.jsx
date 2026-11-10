@@ -15,7 +15,7 @@ export default function AdventureShowcase() {
           
           </h2>
 
-          <p className="max-w-[410px] text-sm leading-[1.48] text-[#696e6c] sm:text-[18px]">
+          <p className="max-w-[410px] text-lg leading-[1.48] text-[#696e6c]">
             From quiet trails and lakeside sunsets to fun and exciting road trips, there's more to discover just beyond the everyday. We bring curious explorers together to experience the outdoors, one adventure at a time.
           </p>
 
