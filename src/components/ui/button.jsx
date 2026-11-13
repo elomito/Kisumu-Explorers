@@ -4,18 +4,18 @@ import { cn } from "../../lib/utils";
 export const Button = React.forwardRef(
   ({ className, variant = "default", size = "default", ...props }, ref) => {
     const baseStyles =
-      "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer active:scale-[0.98]";
+      "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer active:scale-[0.98]";
 
     const variants = {
       default:
-        "bg-[#034d44] text-white hover:bg-[#046156] shadow-lg shadow-teal-950/30",
-      teal: "bg-[#065f54] text-white hover:bg-[#077063] shadow-md shadow-emerald-950/20",
+        "bg-[#332d1b] text-white hover:bg-[#242013] shadow-md shadow-black/20",
+      teal: "bg-[#332d1b] text-white hover:bg-[#242013] shadow-md shadow-black/20",
       outline:
-        "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white/20",
-      ghost: "text-white hover:bg-white/10",
+        "border border-[#332d1b]/20 bg-transparent text-[#332d1b] hover:bg-[#332d1b]/10",
+      ghost: "text-[#332d1b] hover:bg-[#332d1b]/10",
       glass:
         "bg-white/20 text-white backdrop-blur-md border border-white/30 hover:bg-white/30 shadow-sm",
-      link: "text-white underline-offset-4 hover:underline p-0 h-auto",
+      link: "text-[#332d1b] underline-offset-4 hover:underline p-0 h-auto",
     };
 
     const sizes = {

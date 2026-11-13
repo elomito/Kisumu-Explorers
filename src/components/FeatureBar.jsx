@@ -39,33 +39,34 @@ export function FeatureBar({ onFeatureClick }) {
   return (
     <aside
       aria-label="Traveler Guarantees"
-      className="w-full max-w-[16rem] rounded-2xl md:rounded-3xl bg-white/15 backdrop-blur-xl border border-white/25 px-4 py-3 md:px-5 md:py-4 shadow-2xl shadow-black/25 text-white select-none transition-all duration-300 hover:bg-white/20"
+      className="w-full max-w-4xl mx-auto rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 px-4 py-3 sm:px-6 sm:py-3.5 shadow-2xl shadow-black/20 text-white select-none transition-all duration-300"
     >
-      <div className="flex flex-col divide-y divide-white/15">
-        {features.map((feature) => {
+      <div className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-white/20">
+        {features.map((feature, idx) => {
           const IconComponent = feature.icon;
           return (
             <button
               key={feature.id}
+              type="button"
               onClick={() =>
                 onFeatureClick?.(
                   `${feature.title} ${feature.subtitle}`,
-                  feature.description,
+                  feature.description
                 )
               }
-              className="flex items-center gap-3.5 text-left group w-full py-3.5 first:pt-1.5 last:pb-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 rounded-xl transition-all duration-200"
+              className={`flex items-center gap-3 text-left group w-full py-2.5 px-3 sm:px-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-xl transition-all duration-200 hover:bg-white/10 ${
+                idx % 2 === 1 ? "pl-4" : ""
+              }`}
             >
-              {/* Outer Pin / Icon Capsule */}
-              <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center shrink-0 group-hover:bg-cyan-400 group-hover:text-slate-950 group-hover:border-cyan-300 transition-all duration-200 shadow-sm">
-                <IconComponent className="w-5 h-5 stroke-[1.8] text-white group-hover:text-slate-950 transition-colors" />
+              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <IconComponent className="w-4 h-4 stroke-[2] text-white" />
               </div>
 
-              {/* Text lines */}
-              <div className="flex flex-col">
-                <span className="text-xs md:text-sm font-semibold tracking-tight leading-tight text-white/95 group-hover:text-white">
+              <div className="flex flex-col min-w-0">
+                <span className="text-xs sm:text-[13px] font-semibold tracking-tight leading-tight text-white/95">
                   {feature.title}
                 </span>
-                <span className="text-xs md:text-sm font-medium leading-tight text-white/80 group-hover:text-white/95">
+                <span className="text-[11px] sm:text-xs font-normal leading-tight text-white/80">
                   {feature.subtitle}
                 </span>
               </div>

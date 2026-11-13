@@ -69,17 +69,17 @@ const footerGroups = [
   {
     title: "Explore",
     links: [
-      "Destinations",
-      "Hiking",
-      "Camping",
-      "Boat riding",
-      "Team building",
+      "Regions",
+      "Cities",
+      "Parks",
+      "Trails",
+      "Points of interest",
       "Routes & maps",
     ],
   },
   {
     title: "Company",
-    links: ["About", "Blog", "Partners", "Contact"],
+    links: ["About", "Blog", "Partners", "Affiliates"],
   },
   {
     title: "Community",
@@ -89,32 +89,43 @@ const footerGroups = [
 
 const legalLinks = ["Privacy Policy", "Terms", "Cookie Policy"];
 
-export default function Footer() {
+export default function Footer({ onNavigate }) {
   return (
-    <footer className="w-full bg-[#003d2d] px-6 pb-6 pt-12 text-white sm:px-10 lg:px-0">
-      <div className="mx-auto max-w-[922px]">
+    <footer className="w-full bg-[#332d1b] px-6 pb-8 pt-14 text-white sm:px-10 lg:px-12">
+      <div className="mx-auto max-w-6xl">
         {/* Footer columns */}
-        <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-[1.7fr_1fr_1fr_1fr]">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           {/* Brand and socials */}
           <div className="col-span-2 md:col-span-1">
-            <a href="/" className="flex items-center gap-2.5">
-              <span className="h-9 w-9 shrink-0 rounded-full bg-[#00e5f0]" />
-              <span className="whitespace-nowrap text-[17px] font-semibold tracking-[-0.3px] text-white">
+            <a
+              href="#home"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate?.("home");
+              }}
+              className="inline-block cursor-pointer"
+            >
+              <span className="whitespace-nowrap text-xl font-bold tracking-tight text-white">
                 kisumuexplorers.com
               </span>
             </a>
 
-            <p className="mt-6 text-[11px] font-medium leading-4 text-white">
+            <div className="mt-3 space-y-0.5 text-xs text-white/70">
+              <p>All life matters</p>
+              <p>All the adventures you need</p>
+            </div>
+
+            <p className="mt-6 text-xs font-medium text-white/85">
               Connect with us
             </p>
 
-            <ul className="mt-3 flex items-center gap-3.5">
+            <ul className="mt-3 flex items-center gap-3">
               {socials.map(({ label, href, Icon }) => (
                 <li key={label}>
                   <a
                     href={href}
                     aria-label={label}
-                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#003d2d] transition-colors hover:bg-[#00e5f0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e75606] text-white shadow-sm transition-all hover:bg-[#d04b02] hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
                     <Icon className="h-3.5 w-3.5" />
                   </a>
@@ -130,16 +141,22 @@ export default function Footer() {
               aria-label={group.title}
               className="flex flex-col items-start"
             >
-              <h3 className="mb-3 text-[12px] font-bold leading-4 text-white">
+              <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-white">
                 {group.title}
               </h3>
 
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-2.5">
                 {group.links.map((link) => (
                   <li key={link}>
                     <a
-                      href="#"
-                      className="text-[11px] leading-[14px] text-white/85 transition-colors hover:text-[#00e5f0] focus-visible:text-[#00e5f0]"
+                      href={link === "About" ? "#about" : "#"}
+                      onClick={(e) => {
+                        if (link === "About" && onNavigate) {
+                          e.preventDefault();
+                          onNavigate("about");
+                        }
+                      }}
+                      className="text-xs text-[#cfcac2] transition-colors hover:text-white focus-visible:text-white cursor-pointer"
                     >
                       {link}
                     </a>
@@ -151,22 +168,26 @@ export default function Footer() {
         </div>
 
         {/* Bottom divider */}
-        <div className="mt-14 border-t border-white/20" />
+        <div className="mt-12 border-t border-white/10" />
 
-        {/* Legal links */}
-        <ul className="flex flex-wrap items-center justify-center gap-x-2 pt-5 text-center text-[10px] leading-[1.3] text-white/50">
-          {legalLinks.map((link, index) => (
-            <li key={link} className="flex items-center gap-2">
-              {index > 0 && <span aria-hidden="true">•</span>}
-              <a
-                href="#"
-                className="transition-colors hover:text-white/90 focus-visible:text-white/90"
-              >
-                {link}
-              </a>
-            </li>
-          ))}
-        </ul>
+        {/* Bottom legal & credit bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-[11px] text-[#9c9485]">
+          <span>Made in Kisumu</span>
+
+          <ul className="flex flex-wrap items-center gap-x-2">
+            {legalLinks.map((link, index) => (
+              <li key={link} className="flex items-center gap-2">
+                {index > 0 && <span aria-hidden="true">•</span>}
+                <a
+                  href="#"
+                  className="transition-colors hover:text-white focus-visible:text-white"
+                >
+                  {link}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </footer>
   );

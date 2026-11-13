@@ -64,7 +64,7 @@ export function FeatureDetailModal({
               onClose();
               onExplore();
             }}
-            className="bg-[#034d44] hover:bg-[#046156] text-white rounded-full text-xs flex items-center gap-1.5"
+            className="bg-[#332d1b] hover:bg-[#242013] text-white rounded-full text-xs flex items-center gap-1.5"
           >
             <span>Explore Trails</span>
             <ArrowRight className="w-3.5 h-3.5" />
