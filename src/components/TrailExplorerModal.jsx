@@ -256,7 +256,7 @@ export function TrailExplorerModal({ isOpen, onClose, onSelectTrail }) {
                       setBookedTrail(trail.title);
                       onSelectTrail?.(trail.title);
                     }}
-                    className="bg-[#034d44] hover:bg-[#046156] text-white rounded-full px-5 py-2 text-xs md:text-sm font-semibold flex items-center gap-2 group-hover:shadow-lg group-hover:shadow-teal-950/40"
+                    className="bg-[#332d1b] hover:bg-[#242013] text-white rounded-full px-5 py-2 text-xs md:text-sm font-semibold flex items-center gap-2 group-hover:shadow-md"
                   >
                     <span>Reserve Hike</span>
                     <ArrowRight className="w-4 h-4" />

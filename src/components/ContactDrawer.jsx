@@ -151,7 +151,7 @@ export function ContactDrawer({ isOpen, onClose, prefillSubject }) {
 
                 <Button
                   type="submit"
-                  className="bg-[#034d44] hover:bg-[#046156] text-white rounded-full px-6 flex items-center gap-2"
+                  className="bg-[#332d1b] hover:bg-[#242013] text-white rounded-full px-6 flex items-center gap-2"
                 >
                   <span>Send Request</span>
                   <Send className="w-3.5 h-3.5" />
