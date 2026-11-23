@@ -6,12 +6,12 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 const DEFAULT_DESCRIPTION = "A wonderful place to be, I got lost here\nA wonderful place to be, I got lost here";
 
 const places = [
-  { id: 1, name: "Kajulu Hills", category: "Hiking", image: "/images/place 1.png" },
-  { id: 2, name: "Kit Mikayi", category: "Swimming", image: "/images/place 2.png" },
-  { id: 3, name: "Lake Victoria", category: "Boat Riding", image: "/images/place 3.png" },
-  { id: 4, name: "Karuma Falls", category: "Zip Lining", image: "/images/place 4.png" },
-  { id: 5, name: "Riat Hills", category: "Camping", image: "/images/place 5.png" },
-  { id: 6, name: "Show Ground", category: "Team building", image: "/images/place 6.png" },
+  { id: 1, name: "Kajulu Hills", category: "Hiking", image: "/images/kajulu hills.JPG" },
+  { id: 2, name: "Kit Mikayi", category: "Hiking", image: "/images/place 1.png" },
+  { id: 3, name: "Lake Victoria", category: "Boat Riding", image: "/images/lake victoria.jpg" },
+  { id: 4, name: "Kanyimon", category: "sky-cycling", image: "/images/sky-cycling.JPG" },
+  { id: 5, name: "Riat Hills", category: "Camping", image: "/images/camping.jpg" },
+  { id: 6, name: "Show Ground", category: "Team building", image: "/images/team-building.jpg" },
 ];
 
 export default function PlacesSection({ onSeeMore }) {
