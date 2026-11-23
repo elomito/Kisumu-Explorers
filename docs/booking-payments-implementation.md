@@ -9,7 +9,7 @@
 
 This document specifies how to add bookable experiences, scheduled departures, online M-Pesa payment, customer/staff notifications, and an authenticated operations dashboard to the existing React/Vite website. It is the implementation contract for the first release.
 
-The repository currently contains only a Vite/React frontend. The existing “Reserve Hike” control sets local UI state; it does not create a booking or contact a payment service. The existing trail entries and USD prices are sample content and must not be treated as real inventory or prices.
+The repository currently contains only a Vite/React frontend. Both existing placeholder booking controls—the “Reserve Hike” button in `src/components/TrailExplorerModal.jsx` (which sets local UI state) and the “Book to hike this place” button in `src/components/PlacesSection.jsx` (which logs to the console)—do not create a booking or contact a payment service. The existing trail entries and USD prices are sample content and must not be treated as real inventory or prices.
 
 ## 2. Goals and scope
 
@@ -42,7 +42,7 @@ The repository currently contains only a Vite/React frontend. The existing “Re
 | Payment method | Paystack mobile money with provider `mpesa`; collect the payer's Safaricom number. |
 | Checkout authorization | Backend starts the charge. Customer authorizes on their device using Safaricom's flow; the site never asks for an M-Pesa PIN or OTP. |
 | Seat hold | Five minutes from booking creation. The Paystack M-Pesa authorization window is documented as 180 seconds; the extra time accommodates response delivery and customer return. |
-| Party size | Integer from 1 through the departure's configured maximum party size, and no larger than remaining capacity. |
+| Party size | Integer from 1 through the departure's effective maximum party size (`departures.max_party_size_override` if set, otherwise `activities.max_party_size`), and no larger than remaining capacity. |
 | Price | Experience's current active per-person price, snapshotted onto the booking when created. Quantity times price determines the amount. |
 | Departure | Must be active, open, in the future, and have capacity at checkout. |
 | Unpaid hold expiry | Expire booking and release capacity after five minutes, unless Paystack has reported a successful payment that requires staff review. |
@@ -55,12 +55,12 @@ The business must populate accurate experiences, descriptions, policies, departu
 
 ### 4.1 Components
 
-1. **Web client:** Existing React 19/Vite app. Add public booking/checkout screens and an `/admin` application area. The client calls the API over HTTPS and never calls Paystack with a secret credential.
+1. **Web client:** Existing React 19/Vite app. Add public booking/checkout screens and an `/admin` application area using client-side routing. Configure SPA fallback rewrites (`/* -> /index.html`) on static hosts so direct navigation to `/admin/*` or `/bookings/*` does not 404. The client calls the API over HTTPS and never calls Paystack with a secret credential.
 2. **API:** Standalone Node.js + TypeScript service using Express. Responsibilities include public catalog reads, booking creation, capacity enforcement, Paystack calls, webhook intake, admin authentication/operations, email outbox processing, and reconciliation.
 3. **Database:** Managed PostgreSQL. Use Drizzle ORM and committed SQL migrations. PostgreSQL is the source of truth for catalog, capacity, booking, payment, staff, audit, webhook, and email state.
 4. **Paystack:** Use the Paystack Charge API for M-Pesa. Configure a public HTTPS webhook endpoint for `charge.success` and any relevant charge-failure events supported by the account. Confirm exact event availability in the merchant dashboard during setup.
 5. **Email:** Use a mail adapter driven by SMTP-compatible environment settings. Nodemailer is the initial transport implementation. Product code enqueues messages in PostgreSQL; a worker sends them and records delivery attempts.
-6. **Hosting:** Deploy the API and managed PostgreSQL as managed services. The frontend may remain on its current host. Configure API origin, CORS allowlist, webhook URL, and secrets for each environment. No hosting vendor is assumed because the repository has no current deployment configuration.
+6. **Hosting:** Deploy the API and managed PostgreSQL as managed services. The frontend may remain on its current host. Because admin sessions use `SameSite=Lax` cookies, browsers will not attach them to cross-site `fetch` requests; in deployed environments, host the frontend and API under the same registrable root domain (for example, `kisumuexplorers.com` and `api.kisumuexplorers.com`) or reverse-proxy `/api/*` from the frontend origin. In local development, proxy `/api` through Vite. Configure API origin, CORS allowlist, webhook URL, and secrets for each environment. No hosting vendor is assumed because the repository has no current deployment configuration.
 
 ### 4.2 Suggested repository layout
 
@@ -130,6 +130,7 @@ Use UUID primary keys generated by the application/database. Store timestamps in
 - `id UUID PK`
 - `slug TEXT UNIQUE NOT NULL`
 - `title TEXT NOT NULL`
+- `category TEXT NOT NULL DEFAULT 'general'` (supports `GET /activities` category filtering)
 - `summary TEXT NOT NULL`
 - `description TEXT NOT NULL`
 - `location TEXT NOT NULL`
@@ -140,13 +141,15 @@ Use UUID primary keys generated by the application/database. Store timestamps in
 - `max_party_size INTEGER NOT NULL CHECK (max_party_size > 0)`
 - `status TEXT NOT NULL CHECK IN ('draft','active','archived')`
 - timestamps
+- Index `(status, category)`.
 
 ### 6.2 `departures`
 
 - `id UUID PK`, `activity_id UUID FK activities`
 - `starts_at TIMESTAMPTZ NOT NULL`, `ends_at TIMESTAMPTZ NULL`
 - `capacity INTEGER NOT NULL CHECK (capacity > 0)`
-- `booked_seats INTEGER NOT NULL DEFAULT 0 CHECK (booked_seats >= 0)`
+- `booked_seats INTEGER NOT NULL DEFAULT 0 CHECK (booked_seats >= 0 AND booked_seats <= capacity)`
+- `max_party_size_override INTEGER NULL CHECK (max_party_size_override > 0)` (effective max party size is `COALESCE(departures.max_party_size_override, activities.max_party_size)`)
 - `status TEXT NOT NULL CHECK IN ('open','closed','cancelled')`
 - `created_by UUID FK admin_users`, `updated_by UUID FK admin_users`, timestamps
 - Index `(activity_id, starts_at, status)`.
@@ -235,7 +238,7 @@ Do not return stack traces, SQL errors, provider secret details, or full provide
 | `GET /activities` | List active activities and currently bookable future departures. Supports category/search and cursor or page pagination. |
 | `GET /activities/:slug` | Activity details with open departures and computed remaining seats. |
 | `POST /bookings` | Create booking + seat hold + first M-Pesa attempt. Requires `Idempotency-Key` header. |
-| `GET /bookings/:publicCode/status` | Return minimal status, amount, activity/departure snapshot, safe payment instructions/status, and expiry. Rate-limit and use high-entropy public code. |
+| `GET /bookings/:publicCode/status` | Return minimal status, amount, activity/departure snapshot, safe payment instructions/status, expiry, and `canRetry: boolean` (true only when `payment_failed` or `expired` and the departure remains open, future, and has capacity). Rate-limit and use high-entropy public code. |
 | `POST /webhooks/paystack` | Verify signature and durably accept Paystack event. No session auth; strict signature verification is mandatory. |
 
 `POST /bookings` request:
@@ -288,8 +291,12 @@ All admin routes require a valid session, CSRF protection for mutations, and rol
 | `POST /admin/auth/login` | Authenticate invited/active staff; set secure session cookie |
 | `POST /admin/auth/logout` | Revoke current session |
 | `GET /admin/auth/me` | Current user and role |
-| `POST /admin/users/invitations` | Admin-only invite |
 | `POST /admin/auth/accept-invitation` | Set password with unexpired single-use invite token |
+| `POST /admin/auth/request-password-reset` | Rate-limited generic request; emails single-use hashed reset token |
+| `POST /admin/auth/reset-password` | Set new password with unexpired single-use reset token and revoke all sessions |
+| `GET /admin/users` | Admin-only paginated list of staff accounts and invitation status |
+| `POST /admin/users/invitations` | Admin-only invite |
+| `PATCH /admin/users/:id` | Admin-only role change or account disable (revokes active sessions) |
 | `GET/POST /admin/activities` | List/create activities |
 | `GET/PATCH /admin/activities/:id` | Read/update/archive activity |
 | `GET/POST /admin/departures` | List/create departures |
@@ -354,7 +361,7 @@ Amount is an integer string in the smallest KES unit as required by Paystack. Th
 ### 10.2 Webhook security and processing
 
 - Configure the current Paystack webhook signing secret from the Paystack dashboard. Prefer the current `Paystack-Signature` format. Read raw request bytes before JSON parsing.
-- Verify timestamped signature per Paystack docs: parse `t` and all `v1` values, reject timestamps outside a five-minute window, calculate HMAC-SHA512 over `t + "." + rawBody` with the complete webhook signing secret, and use constant-time comparison. Support the legacy `x-paystack-signature` HMAC only during an explicitly configured migration if the account still emits it; never accept unsigned events.
+- Verify timestamped signature per Paystack docs: parse `t` and all `v1` values (each `v1` entry may carry a key-ID prefix such as `v1=whk_3f9a1c2e:9d1b...`; strip any `<key_id>:` prefix before comparison and evaluate all `v1` entries to support secret rotation), reject timestamps outside a five-minute window, calculate HMAC-SHA512 over `t + "." + rawBody` with the complete webhook signing secret, and use constant-time comparison. Support the legacy `x-paystack-signature` HMAC only during an explicitly configured migration if the account still emits it; never accept unsigned events.
 - Webhook path must be HTTPS in deployed environments. Optionally add Paystack IP allowlisting as defense in depth; signature verification remains required.
 - Validate JSON shape, event name, payment reference, amount, currency, and provider transaction identifiers. Never trust metadata alone as proof.
 - Insert the event durably with dedupe key before returning `200`. Return `401` on invalid signature; `400` for malformed payload; `200` for verified, durably accepted events even if background processing is queued. Do not hold the HTTP request open for email or reconciliation.
@@ -375,7 +382,7 @@ Before production, merchant must enable Mobile Money/M-Pesa in Paystack dashboar
 
 - Invitation flow: admin submits staff email/role; API creates single-use random token, stores only hash with expiry, and emails invitation link. Default expiry: 24 hours. Accepting sets password, activates account, consumes token, and appends audit event.
 - Passwords: Argon2id hash with maintained library defaults; never log or email passwords. Enforce reasonable minimum length (at least 12 characters) and reject compromised/common passwords if a maintained local check is available. No MFA in v1; design session storage so MFA can be added later.
-- Sessions: opaque random ID in `HttpOnly`, `Secure`, `SameSite=Lax` cookie, server-side hashed session, 8-hour absolute lifetime and 30-minute idle expiry. Rotate session after login and role change. Revoke on logout, account disable, and password reset.
+- Sessions: opaque random ID in `HttpOnly`, `Secure`, `SameSite=Lax` cookie, server-side hashed session, 8-hour absolute lifetime and 30-minute idle expiry. Rotate session after login and role change. Revoke on logout, account disable, and password reset. Because `SameSite=Lax` cookies are omitted on cross-site `fetch` requests, deploy the web app and API under the same registrable root domain or proxy `/api/*` via the frontend host.
 - CSRF: require CSRF token for cookie-authenticated state-changing routes; validate `Origin`/`Referer` against configured application origin. CORS allowlist must be exact origins, not wildcard credentials.
 - Rate-limit login, invitation acceptance, booking create, and status lookup. Generic login errors prevent account enumeration.
 - Roles: `admin` manages users and all operations; `staff` manages experiences, departures, bookings, and payment-review notes, but not users/roles.
@@ -439,9 +446,10 @@ STAFF_NOTIFICATION_EMAILS
 SESSION_SECRET
 INVITATION_BASE_URL
 LOG_LEVEL
+CHECKOUT_ENABLED=true
 ```
 
-Validate all configuration at process startup and fail closed if required values are missing or malformed. `.env` files are local-only and ignored by Git; provide `.env.example` with empty placeholders, never real credentials. Use separate Paystack test/live credentials and separate DBs for local, staging, production. Rotate secrets through platform secret management and document rotation procedure.
+Validate all configuration at process startup and fail closed if required values are missing or malformed. `.env` and `.env.*` files are local-only and explicitly ignored in `.gitignore`; provide `.env.example` with empty placeholders, never real credentials. Use separate Paystack test/live credentials and separate DBs for local, staging, production. Rotate secrets through platform secret management and document rotation procedure.
 
 ## 15. Observability and support
 
