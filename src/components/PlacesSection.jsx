@@ -6,15 +6,15 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 const DEFAULT_DESCRIPTION = "A wonderful place to be, I got lost here\nA wonderful place to be, I got lost here";
 
 const places = [
-  { id: 1, name: "Kajulu Hills", category: "Hiking", image: "/images/kajulu hills.JPG" },
-  { id: 2, name: "Kit Mikayi", category: "Hiking", image: "/images/place 1.png" },
-  { id: 3, name: "Lake Victoria", category: "Boat Riding", image: "/images/lake victoria.jpg" },
-  { id: 4, name: "Kanyimon", category: "sky-cycling", image: "/images/sky-cycling.JPG" },
-  { id: 5, name: "Riat Hills", category: "Camping", image: "/images/camping.jpg" },
-  { id: 6, name: "Show Ground", category: "Team building", image: "/images/team-building.jpg" },
+  { id: 1, name: "Kajulu Hills", category: "Hiking", trailId: "kajulu-hills", image: "/images/kajulu hills.JPG" },
+  { id: 2, name: "Kit Mikayi", category: "Hiking", trailId: "kit-mikayi", image: "/images/place 1.png" },
+  { id: 3, name: "Lake Victoria", category: "Boat Riding", trailId: "lake-victoria", image: "/images/lake victoria.jpg" },
+  { id: 4, name: "Kanyimon", category: "sky-cycling", trailId: "kanyimon", image: "/images/sky-cycling.JPG" },
+  { id: 5, name: "Riat Hills", category: "Camping", trailId: "riat-hills", image: "/images/camping.jpg" },
+  { id: 6, name: "Show Ground", category: "Team building", trailId: "show-ground", image: "/images/team-building.jpg" },
 ];
 
-export default function PlacesSection({ onSeeMore }) {
+export default function PlacesSection({ onSeeMore, onBookPlace }) {
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [category, setCategory] = useState("All");
@@ -197,7 +197,7 @@ export default function PlacesSection({ onSeeMore }) {
                           tabIndex={isActive ? 0 : -1}
                           onClick={(event) => {
                             event.stopPropagation();
-                            console.log("Selected destination:", place);
+                            onBookPlace?.(place.trailId);
                           }}
                           className="mt-3 h-10 rounded-full bg-[#332d1b] hover:bg-[#242013] px-6 text-xs font-semibold text-white shadow-md transition-colors"
                         >

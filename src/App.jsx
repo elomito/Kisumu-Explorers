@@ -13,6 +13,7 @@ import AboutPage from "./components/AboutPage";
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [exploreModalOpen, setExploreModalOpen] = useState(false);
+  const [exploreInitialTrailId, setExploreInitialTrailId] = useState(null);
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [activeFeature, setActiveFeature] = useState({
     isOpen: false,
@@ -75,7 +76,13 @@ export default function App() {
 
             <AdventureShowcase onDiscoverClick={() => setExploreModalOpen(true)} />
 
-            <PlacesSection onSeeMore={() => setExploreModalOpen(true)} />
+            <PlacesSection
+              onSeeMore={() => setExploreModalOpen(true)}
+              onBookPlace={(trailId) => {
+                setExploreInitialTrailId(trailId);
+                setExploreModalOpen(true);
+              }}
+            />
             <Explore />
           </>
         )}
@@ -87,7 +94,11 @@ export default function App() {
       {/* Interactive Modals & Drawers */}
       <TrailExplorerModal
         isOpen={exploreModalOpen}
-        onClose={() => setExploreModalOpen(false)}
+        onClose={() => {
+          setExploreModalOpen(false);
+          setExploreInitialTrailId(null);
+        }}
+        initialTrailId={exploreInitialTrailId}
       />
 
       <ContactDrawer

@@ -20,28 +20,29 @@ export function ContactDrawer({ isOpen, onClose, prefillSubject }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-[#262216]/70 backdrop-blur-md animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-lg bg-slate-900 border border-white/20 rounded-3xl shadow-2xl overflow-hidden text-white"
+        className="relative w-full max-w-lg bg-[#f5f1e8] border border-[#d6ccb9] rounded-3xl shadow-2xl overflow-hidden text-[#262216]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="contact-modal-title"
       >
-        <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between bg-slate-950/60">
+        {/* Header */}
+        <div className="px-6 py-5 border-b border-[#d6ccb9] flex items-center justify-between bg-[#eae3d5]">
           <div>
-            <span className="text-cyan-400 text-xs font-semibold uppercase tracking-wider block mb-1">
-              24/7 Expedition Desk
+            <span className="text-[#635e4e] text-xs font-semibold uppercase tracking-wider block mb-1">
+              Get in Touch
             </span>
             <h2
               id="contact-modal-title"
-              className="text-xl font-bold text-white"
+              className="text-xl font-extrabold text-[#332d1b]"
             >
-              Connect with traveler.com
+              Connect with Kisumu Explorers
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white/80 hover:text-white cursor-pointer"
+            className="w-9 h-9 rounded-full bg-[#d6ccb9] hover:bg-[#c4b9a4] flex items-center justify-center transition-colors text-[#635e4e] hover:text-[#332d1b] cursor-pointer"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
@@ -51,24 +52,23 @@ export function ContactDrawer({ isOpen, onClose, prefillSubject }) {
         <div className="p-6 md:p-8">
           {submitted ? (
             <div className="py-8 text-center space-y-4">
-              <div className="w-14 h-14 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center mx-auto">
+              <div className="w-14 h-14 rounded-full bg-[#332d1b]/10 text-[#332d1b] flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-white">
-                Message Dispatched!
+              <h3 className="text-xl font-bold text-[#332d1b]">
+                Message Sent!
               </h3>
-              <p className="text-sm text-slate-300 max-w-sm mx-auto">
-                Thank you, {formData.name}. Our wilderness expedition
-                coordinator will review your request and get back to you at{" "}
-                {formData.email} within 2 hours.
+              <p className="text-sm text-[#635e4e] max-w-sm mx-auto">
+                Thank you, {formData.name}. Our team will review your request
+                and get back to you at{" "}
+                <span className="font-semibold text-[#332d1b]">{formData.email}</span> within 2 hours.
               </p>
               <Button
-                variant="outline"
                 onClick={() => {
                   setSubmitted(false);
                   onClose();
                 }}
-                className="rounded-full mt-4"
+                className="rounded-full mt-4 bg-[#332d1b] hover:bg-[#242013] text-white"
               >
                 Done
               </Button>
@@ -76,39 +76,39 @@ export function ContactDrawer({ isOpen, onClose, prefillSubject }) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-[#332d1b] mb-1.5">
                   Full Name
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Alex Morgan"
+                  placeholder="e.g. Achieng Omondi"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-white/15 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-cyan-400"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#d6ccb9] text-[#332d1b] placeholder-[#9e9685] text-sm focus:outline-none focus:border-[#332d1b] transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-[#332d1b] mb-1.5">
                   Email Address
                 </label>
                 <input
                   type="email"
                   required
-                  placeholder="alex@example.com"
+                  placeholder="achieng@example.com"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-white/15 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-cyan-400"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#d6ccb9] text-[#332d1b] placeholder-[#9e9685] text-sm focus:outline-none focus:border-[#332d1b] transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-[#332d1b] mb-1.5">
                   Planned Group Size
                 </label>
                 <select
@@ -116,7 +116,7 @@ export function ContactDrawer({ isOpen, onClose, prefillSubject }) {
                   onChange={(e) =>
                     setFormData({ ...formData, groupSize: e.target.value })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-white/15 text-white text-sm focus:outline-none focus:border-cyan-400"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#d6ccb9] text-[#332d1b] text-sm focus:outline-none focus:border-[#332d1b] transition-colors"
                 >
                   <option value="Solo Adventurer">Solo Adventurer (1)</option>
                   <option value="Duo (2)">Duo / Couple (2)</option>
@@ -128,24 +128,24 @@ export function ContactDrawer({ isOpen, onClose, prefillSubject }) {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-[#332d1b] mb-1.5">
                   Trail Wishes / Questions
                 </label>
                 <textarea
                   rows={3}
                   required
-                  placeholder="Tell us what kind of terrain, dates, or experience you are looking for..."
+                  placeholder="Tell us what kind of adventure, dates, or experience you're looking for..."
                   value={formData.message}
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-white/15 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-cyan-400 resize-none"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#d6ccb9] text-[#332d1b] placeholder-[#9e9685] text-sm focus:outline-none focus:border-[#332d1b] transition-colors resize-none"
                 />
               </div>
 
               <div className="pt-2 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                  <Clock className="w-3.5 h-3.5 text-cyan-400" />
+                <div className="flex items-center gap-1.5 text-xs text-[#9e9685]">
+                  <Clock className="w-3.5 h-3.5 text-[#635e4e]" />
                   <span>Avg reply: &lt; 2 hrs</span>
                 </div>
 
@@ -160,13 +160,14 @@ export function ContactDrawer({ isOpen, onClose, prefillSubject }) {
             </form>
           )}
 
-          <div className="mt-6 pt-5 border-t border-white/10 grid grid-cols-2 gap-3 text-xs text-slate-400">
+          {/* Contact info footer */}
+          <div className="mt-6 pt-5 border-t border-[#d6ccb9] grid grid-cols-2 gap-3 text-xs text-[#9e9685]">
             <div className="flex items-center gap-2">
-              <Phone className="w-3.5 h-3.5 text-cyan-400" />
-              <span>+1 (800) 555-HIKE</span>
+              <Phone className="w-3.5 h-3.5 text-[#635e4e]" />
+              <span>+254 700 000 000</span>
             </div>
             <div className="flex items-center gap-2">
-              <Mail className="w-3.5 h-3.5 text-cyan-400" />
+              <Mail className="w-3.5 h-3.5 text-[#635e4e]" />
               <span>info@kisumuexplorers.com</span>
             </div>
           </div>
