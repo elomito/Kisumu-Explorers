@@ -4,6 +4,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings
 from django.core.cache import cache
 from PIL import Image
+from django.urls import reverse
 from rest_framework.test import APITestCase
 
 from .models import Category, GalleryPhoto, Inquiry, Place, Trail, TrailHighlight, VisitedLocation
@@ -69,4 +70,5 @@ class ApiTests(APITestCase):
         self.assertEqual(self.client.post("/api/places/", {}, format="json").status_code, 405)
 
     def test_admin_requires_login(self):
-        self.assertEqual(self.client.get("/admin/").status_code, 302)
+        self.assertEqual(self.client.get("/admin/").status_code, 404)
+        self.assertEqual(self.client.get(reverse("admin:index")).status_code, 302)

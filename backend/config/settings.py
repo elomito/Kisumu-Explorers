@@ -32,6 +32,9 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-insecure-key")
 if not DEBUG and SECRET_KEY == "dev-only-insecure-key":
     raise RuntimeError("Set DJANGO_SECRET_KEY when DJANGO_DEBUG is not True.")
 
+# Where the admin lives. Change it in .env to something only your team knows.
+ADMIN_URL = os.environ.get("ADMIN_URL", "team-portal").strip("/") + "/"
+
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")
 

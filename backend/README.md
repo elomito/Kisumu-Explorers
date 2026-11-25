@@ -1,7 +1,7 @@
 # Kisumu Explorers – Backend (Django + DRF)
 
 One backend, two faces:
-- **Admin site** at `/admin/` – for the team (add places, trails, photos, read inquiries).
+- **Admin site** at `/team-portal/` (change with `ADMIN_URL` in `.env`) – for the team (add places, trails, photos, read inquiries).
 - **Public JSON API** at `/api/` – read by the React site.
 
 ## Run locally
@@ -14,7 +14,7 @@ python manage.py createsuperuser
 python manage.py seed --images-dir ../Kisumu-Explorers-main/public   # optional: load current frontend data
 python manage.py runserver
 ```
-Admin: http://localhost:8000/admin/  ·  API: http://localhost:8000/api/
+Admin: http://localhost:8000/team-portal/  ·  API: http://localhost:8000/api/
 
 Images go to `media/` locally. Set `CLOUDINARY_URL` in `.env` and they go to Cloudinary instead (no code change).
 
