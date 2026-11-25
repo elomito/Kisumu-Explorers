@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+/* Match the public site's typeface */
+html, body, button, input, select, textarea {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif !important;
+}
+
+/* Warm cream page background in light mode, like the public site */
+html:not(.dark) body { background-color: #f5f1e8; }
+html:not(.dark) #nav-sidebar, html:not(.dark) aside { background-color: #fbf9f4; }
