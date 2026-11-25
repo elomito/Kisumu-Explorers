@@ -1,4 +1,4 @@
-"""Load the places and trails that are currently hardcoded in the React app.
+"""Load the places, trails and route stops that are currently hardcoded in the React app.
 
 Usage:
     python manage.py seed --images-dir ../Kisumu-Explorers-main/public
@@ -8,7 +8,7 @@ from pathlib import Path
 from django.core.files import File
 from django.core.management.base import BaseCommand
 
-from explorers.models import Category, Place, Trail, TrailHighlight
+from explorers.models import Category, Place, Trail, TrailHighlight, VisitedLocation
 
 PLACES = [
     ("Kajulu Hills", "Hiking", "images/kajulu hills.JPG"),
@@ -17,6 +17,18 @@ PLACES = [
     ("Kanyimon", "sky-cycling", "images/sky-cycling.JPG"),
     ("Riat Hills", "Camping", "images/camping.jpg"),
     ("Show Ground", "Team building", "images/team-building.jpg"),
+]
+
+# The stops already drawn into the frontend's route illustration (public/images/trails.png).
+# x/y are % across/down that picture.
+VISITED = [
+    ("zone01kisumu", 20.6, 81.9),
+    ("Kajulu Hills", 32.4, 69.0),
+    ("Lake Victoria", 41.6, 54.2),
+    ("Airport", 47.4, 56.5),
+    ("Kit Mikayi", 55.6, 41.9),
+    ("Impala Park", 62.8, 60.3),
+    ("Homabay", 85.9, 45.8),
 ]
 
 TRAILS = [
@@ -67,4 +79,8 @@ class Command(BaseCommand):
             trail, created = Trail.objects.get_or_create(title=data["title"], defaults={**data, "order": order})
             if created:
                 TrailHighlight.objects.bulk_create(TrailHighlight(trail=trail, text=t) for t in highlights)
+        for order, (name, x, y) in enumerate(VISITED, start=1):
+            VisitedLocation.objects.get_or_create(
+                name=name, defaults={"order": order, "x_percent": x, "y_percent": y}
+            )
         self.stdout.write(self.style.SUCCESS("Seed complete."))
