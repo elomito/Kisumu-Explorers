@@ -24,7 +24,7 @@ const THEMES = {
 export function Navbar({
   currentPage = "home",
   onNavigate,
-  onOpenExplore,
+  onOpenDiscover,
   onOpenContact,
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -88,7 +88,12 @@ export function Navbar({
       active: currentPage === "about",
       onClick: () => onNavigate?.("about"),
     },
-    { label: "Discover", href: "#discover", onClick: onOpenExplore },
+    {
+      label: "Discover",
+      href: "#discover",
+      active: currentPage === "discover",
+      onClick: onOpenDiscover,
+    },
     { label: "Contact Us", href: "#contact", onClick: onOpenContact },
   ];
 
@@ -188,7 +193,7 @@ export function Navbar({
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenExplore?.();
+                onOpenDiscover?.();
               }}
               className="w-full py-3 px-5 rounded-full bg-[#332d1b] hover:bg-[#242013] text-white font-semibold text-sm flex items-center justify-center gap-2 border border-white/20 shadow-lg transition-colors cursor-pointer"
             >
